@@ -4,8 +4,9 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
-import { User } from './user/entities/user.entity';
-import { UserModule } from './user/user.module';
+import { Manufacturer } from './manufacturer/entities/manufacturer.entity';
+import { ManufacturerModule } from './manufacturer/manufacturer.module';
+import { formatError } from './common/graphql/format-error';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
       graphiql: true,
       autoSchemaFile: true,
       sortSchema: true,
+      formatError,
     }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
@@ -26,11 +28,11 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [Manufacturer],
       synchronize: true,
     }),
-    UserModule
+    ManufacturerModule,
   ],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

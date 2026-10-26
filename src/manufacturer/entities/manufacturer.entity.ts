@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Country } from '../../common/enums/country.enum';
+import { Country } from 'src/common/enums/country.enum';
 
 @ObjectType()
 @Entity()

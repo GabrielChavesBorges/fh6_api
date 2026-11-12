@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Country } from 'src/common/enums/country.enum';
+import { Car } from 'src/car/entities/car.entity';
 
 @ObjectType()
 @Entity()
@@ -16,4 +17,8 @@ export class Manufacturer {
   @Field(() => Country)
   @Column({ length: 3 })
   country: Country;
+
+  @Field(() => [Car])
+  @OneToMany(() => Car, (car) => car.manufacturer)
+  cars: Car[];
 }

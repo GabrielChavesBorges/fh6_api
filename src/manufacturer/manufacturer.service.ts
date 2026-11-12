@@ -54,7 +54,15 @@ export class ManufacturerService {
 
   async remove(id: number): Promise<boolean> {
     const manufacturerToDelete = await this.findOne(id);
-    await this.manufacturerRepository.remove(manufacturerToDelete);
+    try {
+      await this.manufacturerRepository.remove(manufacturerToDelete);
+    } catch (error) {
+      if (this.isReferencedDeletion(error)) {
+        const errorMessage = `Manufacturer "${manufacturerToDelete.name}" still has cars registered to it and can't be deleted.`;
+        throw new ConflictException(errorMessage);
+      }
+      throw error;
+    }
     return true;
   }
 
@@ -66,5 +74,16 @@ export class ManufacturerService {
 
     const isDuplicateFailure = (error.driverError as { code?: string }).code === 'ER_DUP_ENTRY';
     return isDuplicateFailure;
+  }
+
+  private isReferencedDeletion(error: unknown): boolean {
+    const notQueryFail = !(error instanceof QueryFailedError);
+    if (notQueryFail) {
+      return false;
+    }
+
+    const errorCode = (error.driverError as { code?: string }).code;
+    const isReferencedDeletionFailure = errorCode === 'ER_ROW_IS_REFERENCED_2';
+    return isReferencedDeletionFailure;
   }
 }

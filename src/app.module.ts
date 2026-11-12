@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { Manufacturer } from './manufacturer/entities/manufacturer.entity';
 import { ManufacturerModule } from './manufacturer/manufacturer.module';
 import { formatError } from './common/graphql/format-error';
+import { Car } from './car/entities/car.entity';
+import { CarModule } from './car/car.module';
 
 @Module({
   imports: [
@@ -28,10 +30,11 @@ import { formatError } from './common/graphql/format-error';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Manufacturer],
+      entities: [Manufacturer, Car],
       synchronize: true,
     }),
     ManufacturerModule,
+    CarModule,
   ],
   providers: [AppService],
 })

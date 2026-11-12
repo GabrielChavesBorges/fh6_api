@@ -1,5 +1,6 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Manufacturer } from 'src/manufacturer/entities/manufacturer.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -9,8 +10,17 @@ export class Car {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ length: 100, unique: true })
   name: string;
+
+  @Field(() => Manufacturer)
+  @ManyToOne(() => Manufacturer, (manufacturer) => manufacturer.cars, { nullable: false, onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'manufacturerId' })
+  manufacturer: Manufacturer;
+
+  @Field(() => Int)
+  @Column()
+  manufacturerId: number;
 
   // engine
   // drivetrain

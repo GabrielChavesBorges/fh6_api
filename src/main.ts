@@ -26,4 +26,7 @@ async function bootstrap() {
   const clickableLink = `\x1b]8;;${url}\x1b\\GraphiQL\x1b]8;;\x1b\\`;
   logger.log(`\x1b[36m${clickableLink}\x1b[0m`);
 }
-bootstrap();
+bootstrap().catch((error: unknown) => {
+  new Logger('Bootstrap').error('Failed to start the application', error);
+  process.exit(1);
+});

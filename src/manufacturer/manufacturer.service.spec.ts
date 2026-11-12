@@ -20,7 +20,7 @@ describe('ManufacturerService', () => {
     remove: jest.fn(),
   };
 
-  const toyota: Manufacturer = { id: 1, name: 'Toyota', country: Country.JPN };
+  const toyota: Manufacturer = { id: 1, name: 'Toyota', country: Country.JPN, cars: [] };
   const duplicateEntryError = new QueryFailedError('INSERT ...', [], { code: 'ER_DUP_ENTRY' } as unknown as Error);
 
   beforeEach(async () => {
@@ -98,7 +98,7 @@ describe('ManufacturerService', () => {
 
     it('throws ConflictException when renaming to an existing name', async () => {
       const duplicateInput: UpdateManufacturerInput = { id: 2, name: 'Toyota' };
-      const honda: Manufacturer = { id: 2, name: 'Honda', country: Country.JPN };
+      const honda: Manufacturer = { id: 2, name: 'Honda', country: Country.JPN, cars: [] };
       repository.preload.mockResolvedValue({ ...honda, ...duplicateInput });
       repository.save.mockRejectedValue(duplicateEntryError);
 

@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { QueryFailedError } from 'typeorm';
 import { Country } from 'src/common/enums/country.enum';
-import { Manufacturer } from './entities/manufacturer.entity';
+import { Manufacturer } from './manufacturer.entity';
 import { ManufacturerService } from './manufacturer.service';
 import { UpdateManufacturerInput } from './dto/update-manufacturer.input';
 

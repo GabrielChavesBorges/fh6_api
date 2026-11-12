@@ -1,10 +1,10 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { CreateCarInput } from './dto/create-car.input';
 import { UpdateCarInput } from './dto/update-car.input';
-import { Car } from './entities/car.entity';
+import { Car } from './car.entity';
 import { CarService } from './car.service';
 import { ManufacturerService } from 'src/manufacturer/manufacturer.service';
-import { Manufacturer } from 'src/manufacturer/entities/manufacturer.entity';
+import { Manufacturer } from 'src/manufacturer/manufacturer.entity';
 
 @Resolver(() => Car)
 export class CarResolver {

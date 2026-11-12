@@ -4,10 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
-import { Manufacturer } from './manufacturer/entities/manufacturer.entity';
+import { Manufacturer } from './manufacturer/manufacturer.entity';
 import { ManufacturerModule } from './manufacturer/manufacturer.module';
 import { formatError } from './common/graphql/format-error';
-import { Car } from './car/entities/car.entity';
+import { Car } from './car/car.entity';
 import { CarModule } from './car/car.module';
 
 @Module({

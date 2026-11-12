@@ -1,7 +1,7 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateManufacturerInput } from './dto/create-manufacturer.input';
 import { UpdateManufacturerInput } from './dto/update-manufacturer.input';
-import { Manufacturer } from './entities/manufacturer.entity';
+import { Manufacturer } from './manufacturer.entity';
 import { ManufacturerService } from './manufacturer.service';
 
 @Resolver(() => Manufacturer)

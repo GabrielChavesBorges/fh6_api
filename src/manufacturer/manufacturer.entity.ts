@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Country } from 'src/common/enums/country.enum';
-import { Car } from 'src/car/entities/car.entity';
+import { Car } from 'src/car/car.entity';
 
 @ObjectType()
 @Entity()

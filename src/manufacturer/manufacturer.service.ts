@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreateManufacturerInput } from './dto/create-manufacturer.input';
 import { UpdateManufacturerInput } from './dto/update-manufacturer.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Manufacturer } from './entities/manufacturer.entity';
+import { Manufacturer } from './manufacturer.entity';
 import { QueryFailedError, Repository } from 'typeorm';
 
 @Injectable()

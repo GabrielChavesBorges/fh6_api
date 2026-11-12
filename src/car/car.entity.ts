@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Manufacturer } from 'src/manufacturer/entities/manufacturer.entity';
+import { Manufacturer } from 'src/manufacturer/manufacturer.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @ObjectType()

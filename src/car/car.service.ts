@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreateCarInput } from './dto/create-car.input';
 import { UpdateCarInput } from './dto/update-car.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Car } from './entities/car.entity';
+import { Car } from './car.entity';
 import { QueryFailedError, Repository } from 'typeorm';
 
 @Injectable()

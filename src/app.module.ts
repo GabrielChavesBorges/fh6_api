@@ -9,6 +9,7 @@ import { ManufacturerModule } from './manufacturer/manufacturer.module';
 import { formatError } from './common/graphql/format-error';
 import { Car } from './car/car.entity';
 import { CarModule } from './car/car.module';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CarModule } from './car/car.module';
       database: process.env.DB_NAME,
       entities: [Manufacturer, Car],
       synchronize: true,
+      namingStrategy: new SnakeNamingStrategy(),
     }),
     ManufacturerModule,
     CarModule,

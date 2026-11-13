@@ -15,7 +15,7 @@ export class Car {
 
   @Field(() => Manufacturer)
   @ManyToOne(() => Manufacturer, (manufacturer) => manufacturer.cars, { nullable: false, onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'manufacturerId' })
+  @JoinColumn({ name: 'manufacturer_id' })
   manufacturer: Manufacturer;
 
   @Field(() => Int)

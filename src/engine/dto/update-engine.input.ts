@@ -1,6 +1,6 @@
 import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 import { IsInt, Min } from 'class-validator';
-import { IsNotExplicitNull } from 'src/common/decorators/is-not-explicit-null';
+import { IsNotExplicitNull } from 'src/common/validation/is-not-explicit-null.decorator';
 import { EngineLayout } from 'src/common/enums/engine-layout.enum';
 import { CreateEngineInput } from './create-engine.input';
 

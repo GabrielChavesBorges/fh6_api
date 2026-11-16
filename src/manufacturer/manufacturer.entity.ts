@@ -16,7 +16,7 @@ export class Manufacturer {
   name: string;
 
   @Field(() => Country)
-  @Column({ length: 3 })
+  @Column({ type: 'enum', enum: Country })
   country: Country;
 
   @Field(() => [Car])

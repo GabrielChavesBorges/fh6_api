@@ -32,7 +32,7 @@ export class Engine {
   stockTorqueNm: number;
 
   @Field(() => EngineLayout)
-  @Column({ length: 10 })
+  @Column({ type: 'enum', enum: EngineLayout })
   layout: EngineLayout;
 
   @Field()

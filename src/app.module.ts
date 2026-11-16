@@ -10,6 +10,8 @@ import { formatError } from './common/graphql/format-error';
 import { Car } from './car/car.entity';
 import { CarModule } from './car/car.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { Engine } from './engine/engine.entity';
+import { EngineModule } from './engine/engine.module';
 
 @Module({
   imports: [
@@ -31,12 +33,13 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Manufacturer, Car],
+      entities: [Car, Engine, Manufacturer],
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
-    ManufacturerModule,
     CarModule,
+    EngineModule,
+    ManufacturerModule,
   ],
   providers: [AppService],
 })

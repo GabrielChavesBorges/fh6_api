@@ -58,7 +58,7 @@ export class ManufacturerService {
       await this.manufacturerRepository.remove(manufacturerToDelete);
     } catch (error) {
       if (this.isReferencedDeletion(error)) {
-        const errorMessage = `Manufacturer "${manufacturerToDelete.name}" still has cars registered to it and can't be deleted.`;
+        const errorMessage = `Manufacturer "${manufacturerToDelete.name}" still has cars/engines registered to it and can't be deleted.`;
         throw new ConflictException(errorMessage);
       }
       throw error;

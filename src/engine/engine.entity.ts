@@ -1,0 +1,50 @@
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { EngineLayout } from 'src/common/enums/engine-layout.enum';
+import { Manufacturer } from 'src/manufacturer/manufacturer.entity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+
+@ObjectType()
+@Entity()
+@Unique(['name', 'manufacturerId'])
+export class Engine {
+  @Field(() => ID)
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Field()
+  @Column({ length: 100 })
+  name: string;
+
+  @Field(() => Int, { nullable: true })
+  @Column({ unsigned: true, nullable: true })
+  displacementCc: number | null;
+
+  @Field(() => Int, { nullable: true })
+  @Column({ unsigned: true, nullable: true })
+  cylinders: number | null;
+
+  @Field(() => Int)
+  @Column({ unsigned: true })
+  stockPowerHp: number;
+
+  @Field(() => Int)
+  @Column({ unsigned: true })
+  stockTorqueNm: number;
+
+  @Field(() => EngineLayout)
+  @Column({ length: 10 })
+  layout: EngineLayout;
+
+  @Field()
+  @Column({ default: false })
+  isHybrid: boolean;
+
+  @Field(() => Manufacturer)
+  @ManyToOne(() => Manufacturer, (manufacturer) => manufacturer.engines, { nullable: false, onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'manufacturer_id' })
+  manufacturer: Manufacturer;
+
+  @Field(() => Int)
+  @Column()
+  manufacturerId: number;
+}

@@ -5,9 +5,11 @@ import { CarResolver } from './car.resolver';
 import { CarService } from './car.service';
 import { Car } from './car.entity';
 import { ManufacturerCarsResolver } from './manufacturer-cars.resolver';
+import { EngineModule } from 'src/engine/engine.module';
+import { EngineCarsResolver } from './engine-cars.resolver';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Car]), ManufacturerModule],
-  providers: [CarResolver, ManufacturerCarsResolver, CarService],
+  imports: [TypeOrmModule.forFeature([Car]), ManufacturerModule, EngineModule],
+  providers: [CarResolver, EngineCarsResolver, ManufacturerCarsResolver, CarService],
 })
 export class CarModule {}

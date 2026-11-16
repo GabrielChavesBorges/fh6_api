@@ -36,7 +36,7 @@ describe('EngineService', () => {
     isHybrid: false,
     manufacturerId: 1,
   };
-  const k20: Engine = { id: 1, ...k20Input, manufacturer: honda };
+  const k20: Engine = { id: 1, ...k20Input, manufacturer: honda, cars: [] };
 
   const duplicateEntryError = new QueryFailedError('INSERT ...', [], { code: 'ER_DUP_ENTRY' } as unknown as Error);
   const missingManufacturerError = new QueryFailedError('INSERT ...', [], {
@@ -75,7 +75,7 @@ describe('EngineService', () => {
         stockTorqueNm: 315,
         layout: EngineLayout.ELECTRIC,
       };
-      const electric: Engine = { id: 2, ...electricInput, manufacturer: honda };
+      const electric: Engine = { id: 2, ...electricInput, manufacturer: honda, cars: [] };
       repository.create.mockReturnValue(electric);
       repository.save.mockResolvedValue(electric);
 

@@ -9,5 +9,6 @@ import { ManufacturerEnginesResolver } from './manufacturer-engines.resolver';
 @Module({
   imports: [TypeOrmModule.forFeature([Engine]), ManufacturerModule],
   providers: [EngineResolver, ManufacturerEnginesResolver, EngineService],
+  exports: [EngineService],
 })
 export class EngineModule {}

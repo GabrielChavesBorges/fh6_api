@@ -1,7 +1,8 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Car } from 'src/car/car.entity';
 import { EngineLayout } from 'src/common/enums/engine-layout.enum';
 import { Manufacturer } from 'src/manufacturer/manufacturer.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -47,4 +48,8 @@ export class Engine {
   @Field(() => Int)
   @Column()
   manufacturerId: number;
+
+  @Field(() => [Car])
+  @OneToMany(() => Car, (car) => car.engine)
+  cars: Car[];
 }

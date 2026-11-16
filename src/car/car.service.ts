@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { isDuplicateEntry } from 'src/common/database/is-duplicate-entry';
 import { isForeignKeyNotFound } from 'src/common/database/is-foreign-key-not-found';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 import { Car } from './car.entity';
 import { CreateCarInput } from './dto/create-car.input';
 import { UpdateCarInput } from './dto/update-car.input';
@@ -22,7 +22,12 @@ export class CarService {
       if (isDuplicateEntry(error)) {
         throw new ConflictException(`Car "${createCarInput.name}" already exists.`);
       } else if (isForeignKeyNotFound(error)) {
-        throw new NotFoundException(`Manufacturer ${createCarInput.manufacturerId} not found.`);
+        const isMissingEngineError = (error as QueryFailedError).message.includes('`engine_id`');
+        if (isMissingEngineError) {
+          throw new NotFoundException(`Engine ${createCarInput.engineId} not found.`);
+        } else {
+          throw new NotFoundException(`Manufacturer ${createCarInput.manufacturerId} not found.`);
+        }
       }
       throw error;
     }
@@ -52,7 +57,12 @@ export class CarService {
         const errorMessage = `Car "${car.name}" already exists.`;
         throw new ConflictException(errorMessage);
       } else if (isForeignKeyNotFound(error)) {
-        throw new NotFoundException(`Manufacturer ${updateCarInput.manufacturerId} not found.`);
+        const isMissingEngineError = (error as QueryFailedError).message.includes('`engine_id`');
+        if (isMissingEngineError) {
+          throw new NotFoundException(`Engine ${updateCarInput.engineId} not found.`);
+        } else {
+          throw new NotFoundException(`Manufacturer ${updateCarInput.manufacturerId} not found.`);
+        }
       }
       throw error;
     }
@@ -66,5 +76,9 @@ export class CarService {
 
   findByManufacturer(manufacturerId: number): Promise<Car[]> {
     return this.carRepository.findBy({ manufacturerId });
+  }
+
+  findByEngine(engineId: number): Promise<Car[]> {
+    return this.carRepository.findBy({ engineId });
   }
 }

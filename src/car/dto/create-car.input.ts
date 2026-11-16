@@ -11,4 +11,8 @@ export class CreateCarInput {
   @Field(() => Int)
   @IsInt()
   manufacturerId: number;
+
+  @Field(() => Int)
+  @IsInt()
+  engineId: number;
 }

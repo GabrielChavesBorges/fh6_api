@@ -5,11 +5,14 @@ import { Car } from './car.entity';
 import { CarService } from './car.service';
 import { ManufacturerService } from 'src/manufacturer/manufacturer.service';
 import { Manufacturer } from 'src/manufacturer/manufacturer.entity';
+import { Engine } from 'src/engine/engine.entity';
+import { EngineService } from 'src/engine/engine.service';
 
 @Resolver(() => Car)
 export class CarResolver {
   constructor(
     private readonly carService: CarService,
+    private readonly engineService: EngineService,
     private readonly manufacturerService: ManufacturerService,
   ) {}
 
@@ -47,5 +50,10 @@ export class CarResolver {
   @ResolveField('manufacturer', () => Manufacturer)
   manufacturer(@Parent() car: Car): Promise<Manufacturer> {
     return this.manufacturerService.findOne(car.manufacturerId);
+  }
+
+  @ResolveField('engine', () => Engine)
+  engine(@Parent() car: Car): Promise<Engine> {
+    return this.engineService.findOne(car.engineId);
   }
 }

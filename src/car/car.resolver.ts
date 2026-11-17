@@ -52,8 +52,8 @@ export class CarResolver {
     return this.manufacturerService.findOne(car.manufacturerId);
   }
 
-  @ResolveField('engine', () => Engine)
-  engine(@Parent() car: Car): Promise<Engine> {
-    return this.engineService.findOne(car.engineId);
+  @ResolveField('stockEngine', () => Engine)
+  stockEngine(@Parent() car: Car): Promise<Engine> {
+    return this.engineService.findOne(car.stockEngineId);
   }
 }

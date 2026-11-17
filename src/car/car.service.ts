@@ -22,9 +22,9 @@ export class CarService {
       if (isDuplicateEntry(error)) {
         throw new ConflictException(`Car "${createCarInput.name}" already exists.`);
       } else if (isForeignKeyNotFound(error)) {
-        const isMissingEngineError = (error as QueryFailedError).message.includes('`engine_id`');
+        const isMissingEngineError = (error as QueryFailedError).message.includes('`stock_engine_id`');
         if (isMissingEngineError) {
-          throw new NotFoundException(`Engine ${createCarInput.engineId} not found.`);
+          throw new NotFoundException(`Engine ${createCarInput.stockEngineId} not found.`);
         } else {
           throw new NotFoundException(`Manufacturer ${createCarInput.manufacturerId} not found.`);
         }
@@ -57,9 +57,9 @@ export class CarService {
         const errorMessage = `Car "${car.name}" already exists.`;
         throw new ConflictException(errorMessage);
       } else if (isForeignKeyNotFound(error)) {
-        const isMissingEngineError = (error as QueryFailedError).message.includes('`engine_id`');
+        const isMissingEngineError = (error as QueryFailedError).message.includes('`stock_engine_id`');
         if (isMissingEngineError) {
-          throw new NotFoundException(`Engine ${updateCarInput.engineId} not found.`);
+          throw new NotFoundException(`Engine ${updateCarInput.stockEngineId} not found.`);
         } else {
           throw new NotFoundException(`Manufacturer ${updateCarInput.manufacturerId} not found.`);
         }
@@ -79,6 +79,6 @@ export class CarService {
   }
 
   findByEngine(engineId: number): Promise<Car[]> {
-    return this.carRepository.findBy({ engineId });
+    return this.carRepository.findBy({ stockEngineId: engineId });
   }
 }

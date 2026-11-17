@@ -25,12 +25,12 @@ export class Car {
 
   @Field(() => Int)
   @Column()
-  engineId: number;
+  stockEngineId: number;
 
   @Field(() => Engine)
   @ManyToOne(() => Engine, (engine) => engine.cars, { nullable: false, onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'engine_id' })
-  engine: Engine;
+  @JoinColumn({ name: 'stock_engine_id' })
+  stockEngine: Engine;
 
   // drivetrain
   // tires

@@ -50,6 +50,6 @@ export class Engine {
   manufacturerId: number;
 
   @Field(() => [Car])
-  @OneToMany(() => Car, (car) => car.engine)
+  @OneToMany(() => Car, (car) => car.stockEngine)
   cars: Car[];
 }

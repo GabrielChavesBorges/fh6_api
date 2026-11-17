@@ -40,13 +40,13 @@ describe('CarService', () => {
     cars: [],
   };
 
-  const civicInput: CreateCarInput = { name: 'Civic Type R', manufacturerId: 1, engineId: 1 };
-  const civic: Car = { id: 1, ...civicInput, manufacturer: honda, engine: k20 };
+  const civicInput: CreateCarInput = { name: 'Civic Type R', manufacturerId: 1, stockEngineId: 1 };
+  const civic: Car = { id: 1, ...civicInput, manufacturer: honda, stockEngine: k20 };
 
   const duplicateEntryError = new QueryFailedError('INSERT ...', [], { code: 'ER_DUP_ENTRY' } as unknown as Error);
 
   // Mimics the mysql2 driver error for a failed foreign key; the message names the column that failed.
-  const foreignKeyError = (column: 'manufacturer_id' | 'engine_id', table: 'manufacturer' | 'engine') => {
+  const foreignKeyError = (column: 'manufacturer_id' | 'stock_engine_id', table: 'manufacturer' | 'engine') => {
     const sqlMessage =
       'Cannot add or update a child row: a foreign key constraint fails ' +
       `(\`fh6\`.\`car\`, CONSTRAINT \`FK_car_${column}\` FOREIGN KEY (\`${column}\`) REFERENCES \`${table}\` (\`id\`))`;
@@ -58,7 +58,7 @@ describe('CarService', () => {
     } as unknown as Error);
   };
   const missingManufacturerError = foreignKeyError('manufacturer_id', 'manufacturer');
-  const missingEngineError = foreignKeyError('engine_id', 'engine');
+  const missingEngineError = foreignKeyError('stock_engine_id', 'engine');
 
   beforeEach(async () => {
     jest.resetAllMocks();
@@ -102,7 +102,7 @@ describe('CarService', () => {
       repository.create.mockReturnValue(civic);
       repository.save.mockRejectedValue(missingEngineError);
 
-      await expect(service.create({ ...civicInput, engineId: 999 })).rejects.toThrow(
+      await expect(service.create({ ...civicInput, stockEngineId: 999 })).rejects.toThrow(
         new NotFoundException('Engine 999 not found.'),
       );
     });
@@ -153,7 +153,7 @@ describe('CarService', () => {
       repository.findBy.mockResolvedValue([civic]);
 
       await expect(service.findByEngine(1)).resolves.toEqual([civic]);
-      expect(repository.findBy).toHaveBeenCalledWith({ engineId: 1 });
+      expect(repository.findBy).toHaveBeenCalledWith({ stockEngineId: 1 });
     });
   });
 
@@ -173,8 +173,8 @@ describe('CarService', () => {
     });
 
     it('can swap the engine', async () => {
-      const swapInput: UpdateCarInput = { id: 1, engineId: 2 };
-      const swapped: Car = { ...civic, engineId: 2 };
+      const swapInput: UpdateCarInput = { id: 1, stockEngineId: 2 };
+      const swapped: Car = { ...civic, stockEngineId: 2 };
       repository.preload.mockResolvedValue(swapped);
       repository.save.mockResolvedValue(swapped);
 
@@ -206,10 +206,10 @@ describe('CarService', () => {
     });
 
     it('throws NotFoundException naming the engine when swapping to one that does not exist', async () => {
-      repository.preload.mockResolvedValue({ ...civic, engineId: 999 });
+      repository.preload.mockResolvedValue({ ...civic, stockEngineId: 999 });
       repository.save.mockRejectedValue(missingEngineError);
 
-      await expect(service.update({ id: 1, engineId: 999 })).rejects.toThrow(
+      await expect(service.update({ id: 1, stockEngineId: 999 })).rejects.toThrow(
         new NotFoundException('Engine 999 not found.'),
       );
     });

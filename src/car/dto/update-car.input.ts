@@ -16,5 +16,5 @@ export class UpdateCarInput extends PartialType(CreateCarInput) {
   manufacturerId?: number;
 
   @IsNotExplicitNull()
-  engineId?: number;
+  stockEngineId?: number;
 }
